@@ -17,7 +17,6 @@ fetch("http://www.mocky.io/v2/5cb1dc1333000073275720f4")
   })
   .then(function(cards) {
     let layout = () => {
-      // Read up on Sort
       let keys = Object.keys(cards).sort(() => 0.5 - Math.random());
       flippedCard1.src = cards[keys[0]].src;
       flippedCard2.src = cards[keys[1]].src;
@@ -35,34 +34,13 @@ fetch("http://www.mocky.io/v2/5cb1dc1333000073275720f4")
       };
     };
 
-    //Command + D selects duplicates
-
     pile.onclick = () => {
       layout();
       cardDescription.innerHTML = "Hover over each card to find out more!";
     };
   });
 
-// When hovering over card in layout, key.description appears in cardDescription.innerHTML
-
-// let changeWords = () => {
-//   cardDescription.innerHTML = 'Thanks for clicking the pile!!';
-// }
-
-// let returnWords = () => {
-//   cardDescription.innerHTML = 'This Works!!!';
-// }
-
-//   if (cardDescription.innerHTML === 'Thanks for clicking the pile!!') {
-//     returnWords();
-//     console.log('You have clicked the pile!');
-//   } else {
-//     changeWords();
-//     console.log('You are trying to change the words...');
-//   }
-// }
-
-//revious RandomCardGenorator using Math.floor(Math.random()
+//Previous RandomCardGenorator using Math.floor(Math.random()
 // selectedImages = [];
 // for (let i = 0; i < 3; i++) {
 //   let selectedImageIndex = randomCardGenerator();
@@ -81,5 +59,13 @@ fetch("http://www.mocky.io/v2/5cb1dc1333000073275720f4")
 // In brackets: http://www.mocky.io/v2/5cabedf3300000781710328a
 // Dave's original Link: https://www.mocky.io/v2/5ca7a19f520000b50b97b681
 
-// Terminal command `python - m SimpleHTTPServer`
-// url = http://localhost:8000/
+//Learnings
+/* 
+
+Read up on .Sort()
+Terminal command `python -m SimpleHTTPServer`
+url = http://localhost:8000/
+
+Command + D selects duplicates
+
+*/
