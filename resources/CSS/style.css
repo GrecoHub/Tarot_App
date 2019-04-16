@@ -23,7 +23,7 @@ header {
 #pile {
   display: flex;
   justify-content: center;
-  margin-bottom: 0px;
+  margin-bottom: -10px;
   margin-top: 40px;
   height: 300px;
 }
@@ -75,6 +75,7 @@ header {
   justify-content: center;
   align-items: center;
 }
+
 .directions h2:nth-of-type(1) {
   text-decoration: underline;
 }

@@ -4,6 +4,7 @@ let numCards = 10;
 let numLayout = 3;
 
 let pile = document.getElementById("pile");
+let hiddenImages = document.getElementById("hidden_images");
 
 let cardDescription = document.getElementById("card_description");
 
@@ -11,61 +12,90 @@ let flippedCard1 = document.getElementById("image1");
 let flippedCard2 = document.getElementById("image2");
 let flippedCard3 = document.getElementById("image3");
 
+const faceDownImage = "./resources/assets/images/back_of_card.jpg";
+
+hiddenImages.style.display = "none";
+
 fetch("http://www.mocky.io/v2/5cb1dc1333000073275720f4")
   .then(response => {
     return response.json();
   })
-  .then(function(cards) {
+  .then(cards => {
     let layout = () => {
+      // #card_images appears showing 3 "face down cards"
+      hiddenImages.style.display = "block";
+      flippedCard1.src = faceDownImage;
+      flippedCard2.src = faceDownImage;
+      flippedCard3.src = faceDownImage;
+
+      // Funtion to check if a card has been flipped
+
+      // Why not card.src here??
+      let isFlipped = card => {
+        return card.getAttribute("src") !== faceDownImage;
+      };
+
+      //Instructions appear before any card is hovered over
+
       let keys = Object.keys(cards).sort(() => 0.5 - Math.random());
-      flippedCard1.src = cards[keys[0]].src;
-      flippedCard2.src = cards[keys[1]].src;
-      flippedCard3.src = cards[keys[2]].src;
+
+      // Cards are displayed when clicked.
+
+      flippedCard1.onclick = () => {
+        flippedCard1.src = cards[keys[0]].src;
+      };
+      flippedCard2.onclick = () => {
+        flippedCard2.src = cards[keys[1]].src;
+      };
+      flippedCard3.onclick = () => {
+        flippedCard3.src = cards[keys[2]].src;
+      };
+
+      cardDescription.innerHTML = "Click on cards to flip them over.";
+
       flippedCard1.onmouseover = () => {
-        cardDescription.innerHTML = cards[keys[0]].description;
+        if (!isFlipped(flippedCard1)) {
+          cardDescription.innerHTML = "Click on card to flip over";
+        } else {
+          cardDescription.innerHTML = cards[keys[0]].description;
+        }
       };
-
       flippedCard2.onmouseover = () => {
-        cardDescription.innerHTML = cards[keys[1]].description;
+        if (!isFlipped(flippedCard2)) {
+          cardDescription.innerHTML = "Click on card to flip over";
+        } else {
+          cardDescription.innerHTML = cards[keys[1]].description;
+          console.log(isFlipped(flippedCard2));
+        }
+      };
+      flippedCard3.onmouseover = () => {
+        if (!isFlipped(flippedCard3)) {
+          cardDescription.innerHTML = "Click on card to flip over";
+        } else {
+          cardDescription.innerHTML = cards[keys[2]].description;
+        }
       };
 
-      flippedCard3.onmouseover = () => {
-        cardDescription.innerHTML = cards[keys[2]].description;
+      // Description changes to "Hover over cards for meanings"
+
+      flippedCard1.onmouseout = () => {
+        if (isFlipped(flippedCard1)) {
+          cardDescription.innerHTML = "Hover over cards for meanings";
+        }
+      };
+      flippedCard2.onmouseout = () => {
+        if (isFlipped(flippedCard2)) {
+          cardDescription.innerHTML = "Hover over cards for meanings";
+        }
+      };
+      flippedCard3.onmouseout = () => {
+        if (isFlipped(flippedCard3)) {
+          cardDescription.innerHTML = "Hover over cards for meanings";
+        }
       };
     };
 
     pile.onclick = () => {
       layout();
-      cardDescription.innerHTML = "Hover over each card to find out more!";
     };
   });
-
-//Previous RandomCardGenorator using Math.floor(Math.random()
-// selectedImages = [];
-// for (let i = 0; i < 3; i++) {
-//   let selectedImageIndex = randomCardGenerator();
-//   selectedImages.push(cardImages[selectedImageIndex]);
-// })
-
-// Previous RandonCardGenorator
-//let randomCardGenerator = () => {
-//   console.log("You have created a random card!");
-//   return Math.floor(Math.random() * numCards);
-// };
-
-//Sources
-// Source for descriptions: https://www.biddytarot.com/tarot-card-meanings/major-arcana/
-// Cards object can be found at: http://www.mocky.io/v2/5cabecdc300000a019103287
-// In brackets: http://www.mocky.io/v2/5cabedf3300000781710328a
-// Dave's original Link: https://www.mocky.io/v2/5ca7a19f520000b50b97b681
-
-//Learnings
-/* 
-
-Read up on .Sort()
-Terminal command `python -m SimpleHTTPServer`
-url = http://localhost:8000/
-
-Command + D selects duplicates
-
-*/
